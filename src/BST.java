@@ -14,7 +14,7 @@ public class BST <K extends Comparable<K>, V> {
     }
     public void put(K key, V val) {
         if (root == null) {
-            root = new Node(key, val);
+            root = new Node(key, val);//compares to a current key (root at first)
             return;
         }
 
@@ -25,21 +25,21 @@ public class BST <K extends Comparable<K>, V> {
             parent = current;
             int cmp = key.compareTo(current.key);
 
-            if (cmp < 0) {
+            if (cmp < 0) { //its less than root so it goes to the left
                 current = current.left;
                 if (current == null) {
-                    parent.left = new Node(key, val);
+                    parent.left = new Node(key, val);//if there is no elem, creates new left child
                     return;
                 }
-            } else if (cmp > 0) {
+            } else if (cmp > 0) { //if its more than root, it goes on the right
                 current = current.right;
                 if (current == null) {
-                    parent.right = new Node(key, val);
+                    parent.right = new Node(key, val); //if there is no elem, creates new right child
                     return;
                 }
             } else {
-                current.val = val;
-            }
+                current.val = val; //if they are equal nothing changes
+        }
         }
     }
 
@@ -49,15 +49,15 @@ public class BST <K extends Comparable<K>, V> {
     }
 
     private Node getNode(Node node, K key) {
-        if (node == null || key.equals(node.key)) {
+        if (node == null || key.equals(node.key)) { //case where needed value is first
             return node;
         }
 
         int cmp = key.compareTo(node.key);
         if (cmp < 0) {
-            return getNode(node.left, key);
+            return getNode(node.left, key);//if needed elem is less than root, it will search on the left side
         } else {
-            return getNode(node.right, key);
+            return getNode(node.right, key);//if needed elem is more or equal than root, it will search on the right side
         }
     }
 
@@ -69,9 +69,7 @@ public class BST <K extends Comparable<K>, V> {
         if (node == null) {
             return null;
         }
-
-        int cmp = key.compareTo(node.key);
-
+        int cmp = key.compareTo(node.key);//search as in previous methods
         if (cmp < 0) {
             node.left = deleteNode(node.left, key);
         } else if (cmp > 0) {
@@ -82,7 +80,7 @@ public class BST <K extends Comparable<K>, V> {
             } else if (node.right == null) {
                 return node.left;
             } else {
-                Node successor = findMinNode(node.right);
+                Node successor = findMinNode(node.right);//finds a minimum child so that a greater will become parent
                 node.key = successor.key;
                 node.val = successor.val;
                 node.right = deleteNode(node.right, successor.key);
@@ -93,22 +91,22 @@ public class BST <K extends Comparable<K>, V> {
     }
 
     private Node findMinNode(Node node) {
-        while (node.left != null) {
+        while (node.left != null) {//min value is the most left one
             node = node.left;
         }
         return node;
     }
     public Iterable<K> iterator() {
-        List<K> keys = new ArrayList<>();
+        List<K> keys = new ArrayList<>();//cretaes a keys list
         inorderTraversal(root, keys);
         return keys;
     }
 
     private void inorderTraversal(Node node, List<K> keys) {
         if (node != null) {
-            inorderTraversal(node.left, keys);
+            inorderTraversal(node.left, keys);//adds elems to keys list starting from the most left
             keys.add(node.key);
-            inorderTraversal(node.right, keys);
+            inorderTraversal(node.right, keys);//then adds right ones
         }
     }
     public int size() {
@@ -119,7 +117,7 @@ public class BST <K extends Comparable<K>, V> {
         if (node == null) {
             return 0;
         }
-        return size(node.left) + 1 + size(node.right);
+        return size(node.left) + 1 + size(node.right);//recursively counts every element
     }
 
 
