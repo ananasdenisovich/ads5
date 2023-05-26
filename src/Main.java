@@ -1,3 +1,5 @@
+import com.sun.source.tree.BinaryTree;
+
 public class Main {
     public static void main(String[] args) {
         BST binary = new BST();//created a new binarySearchTree
@@ -8,7 +10,7 @@ public class Main {
         System.out.println("value from key 1: " + binary.get(1)); //get value from key 1
         System.out.println("keys iterated: " + binary.iterator()); //iterate keys
         System.out.println("size: " + binary.size());//get size of bst
-
+        binary.contains(6, 1);
     }
 
 }

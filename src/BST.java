@@ -48,6 +48,7 @@ public class BST <K extends Comparable<K>, V> {
         return (node != null) ? node.val : null;
     }
 
+
     private Node getNode(Node node, K key) {
         if (node == null || key.equals(node.key)) { //case where needed value is first
             return node;
@@ -119,6 +120,49 @@ public class BST <K extends Comparable<K>, V> {
         }
         return size(node.left) + 1 + size(node.right);//recursively counts every element
     }
+    public int findLevel(K key, V value) {
+        if (root == null) {
+            return -1;
+        }
 
+        return findLevelHelper(root, key, value, 0);
+    }
 
-}
+    private int findLevelHelper(Node node, K key, V value, int level) {
+        if (node == null) {
+            return -1; // Key-value pair not found
+        }
+
+        int cmp = key.compareTo(node.key);
+
+        if (cmp < 0) {
+            return findLevelHelper(node.left, key, value, level + 1);
+        } else if (cmp > 0) {
+            return findLevelHelper(node.right, key, value, level + 1);
+        } else {
+            if (value.equals(node.val)) {
+                return level; // Key-value pair found
+            } else {
+                return -1; // Key found, but value does not match
+            }
+        }
+    }
+    public void contains(V value, K key){
+        System.out.println(containsHelper(root, value, key));
+    }
+    public boolean containsHelper(Node node, V value, K key){
+        if(node == null){
+            return false;
+        }
+        int cmp = key.compareTo(node.key);
+        if(value == root.val){
+            return true;
+        } else if(cmp < 0) {
+            containsHelper(node.left, value, key);
+        } else if (cmp > 0){
+            containsHelper(node.right, value, key);
+        }
+        return false;
+    }
+
+        }
